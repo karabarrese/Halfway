@@ -1,9 +1,10 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, SafeAreaView, Button, Image } from 'react-native'; // for perms
+import { StyleSheet, Text, View, SafeAreaView, Button, Image, TouchableOpacity } from 'react-native'; // for perms
 import { useEffect, useRef, useState } from 'react';
 import { Camera } from 'expo-camera';
 import { shareAsync } from 'expo-sharing';
 import * as MediaLibrary from 'expo-media-library';
+import { ImageBackground } from 'react-native'; // use backgrounds
 
 // SUPER ANNOTATED because i am very unfamiliar with this library
 // note: make sure to include all "plugins":[] from app.json
@@ -73,12 +74,20 @@ export default function App() {
 
   // define camera view/what you see on your camera before the photo is taken. live camera view. something
   return (
-    <Camera style={styles.container} ref={cameraRef}> 
-      <View style={styles.buttonContainer}>
-        <Button title="Take Pic" onPress={takePic} /> 
-      </View>
-      <StatusBar style="auto" />
-    </Camera>
+    <View style={styles.container}>
+      {/* <View  style={styles.takePicButton}>
+        <Button style={styles.takePicButton} title="Take Pic" onPress={takePic} />
+      </View> */}
+      
+      <ImageBackground style={styles.background} source={require("./assets/camerabg.png")}>  
+        <Camera style={styles.camera} ref={cameraRef}> 
+          <StatusBar style="auto" />
+        </Camera>
+        <TouchableOpacity style={styles.takePicButton} onPress={takePic}>
+          <Text> Take Pic</Text>
+        </TouchableOpacity>
+      </ImageBackground>
+    </View>
   );
   // camera style=... display live camera view
   // button title="take Pic"...: button that executes takePic function
@@ -87,13 +96,27 @@ export default function App() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    flex: 1, 
+    // alignItems: 'stretch', // cross (non-main) axis align
+    // justifyContent: 'center', // main axis align
+  },
+  camera: {
+    height: "60%", // takes up 60% of y axis on page (starting from top)
+  },
+  takePicButton:{
+    position: "absolute",
+    top: "85%",
+    left: "50%",
+    right: 20,
+    bottom: 20,
+    backgroundColor: "#514D80"
   },
   buttonContainer: {
-    backgroundColor: '#fff',
-    alignSelf: 'flex-end'
+    backgroundColor: '#fff', // white
+    //alignSelf: 'flex-end'
+  },
+  background: {
+    flex: 1
   },
   preview: {
     alignSelf: 'stretch',
