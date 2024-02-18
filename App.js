@@ -1,5 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, SafeAreaView, Button, Image, TouchableOpacity } from 'react-native'; // for perms
+//import AppLoading from 'expo-app-loading';
+import { useFonts } from 'expo-font';
 import { useEffect, useRef, useState } from 'react';
 import { Camera } from 'expo-camera';
 import { shareAsync } from 'expo-sharing';
@@ -14,6 +16,12 @@ export default function App() {
   const [hasCameraPermission, setHasCameraPermission] = useState();
   const [hasMediaLibraryPermission, setHasMediaLibraryPermission] = useState();
   const [photo, setPhoto] = useState();
+
+  // import fonts
+  let [fontsLoaded] = useFonts({
+    'Itim' : require('./assets/fonts/Itim-Regular.ttf'), // only has 1 font weight
+    'League Spartan': require('./assets/fonts/LeagueSpartan-VariableFont_wght.ttf') // adjustable font weight
+  });
 
   useEffect(() => { // ask for perms, run only once
     (async () => {
@@ -78,13 +86,14 @@ export default function App() {
       {/* <View  style={styles.takePicButton}>
         <Button style={styles.takePicButton} title="Take Pic" onPress={takePic} />
       </View> */}
-      
       <ImageBackground style={styles.background} source={require("./assets/camerabg.png")}>  
         <Camera style={styles.camera} ref={cameraRef}> 
           <StatusBar style="auto" />
         </Camera>
+        {/* touchable opacity = button that fades when you press it */}
+        
         <TouchableOpacity style={styles.takePicButton} onPress={takePic}>
-          <Text> Take Pic</Text>
+          <Text style={styles.buttonText}>Take Pic</Text>
         </TouchableOpacity>
       </ImageBackground>
     </View>
@@ -105,11 +114,18 @@ const styles = StyleSheet.create({
   },
   takePicButton:{
     position: "absolute",
-    top: "85%",
-    left: "50%",
-    right: 20,
-    bottom: 20,
-    backgroundColor: "#514D80"
+    top: "82%",
+    left: "47%",
+    right: 30,
+    bottom: 40,
+    backgroundColor: "#9290B4" // light purple
+  },
+  buttonText:{
+    color: "#110C48",
+    fontSize: 40,
+    fontFamily: 'Itim',
+    marginTop: "17%",
+    marginLeft: "12%"
   },
   buttonContainer: {
     backgroundColor: '#fff', // white
