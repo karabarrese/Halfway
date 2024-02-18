@@ -7,8 +7,8 @@ import Constants from 'expo-constants';
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
     shouldShowAlert: true,
-    shouldPlaySound: false,
-    shouldSetBadge: false,
+    shouldPlaySound: true,
+    shouldSetBadge: true,
   }),
 });
 
@@ -78,6 +78,7 @@ export default function App() {
 
     notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
       setNotification(notification);
+      console.log("It should recieve (from online?)!");
     });
 
     responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
@@ -90,6 +91,13 @@ export default function App() {
     };
   }, []);
 
+  const handleSendNotification = async () => {
+    console.log("It should send!");
+    // Hardcoding :>
+    const hardcodedToken = 'ExponentPushToken[NTbvVXOhTFRWWmoHTk2wBe]';
+    await sendPushNotification(hardcodedToken);
+  };
+
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'space-around' }}>
       <Text>Your expo push token: {expoPushToken}</Text>
@@ -100,9 +108,7 @@ export default function App() {
       </View>
       <Button
         title="Press to Send Notification"
-        onPress={async () => {
-          await sendPushNotification(expoPushToken);
-        }}
+        onPress={handleSendNotification}
       />
     </View>
   );
