@@ -18,7 +18,8 @@ export default function App() {
 
   // import fonts
   let [fontsLoaded] = useFonts({
-    'League Spartan SemiBold': require('./assets/fonts/LeagueSpartan-SemiBold.ttf'), // adjustable font weight
+    'League Spartan SemiBold': require('./assets/fonts/LeagueSpartan-SemiBold.ttf'), 
+    'League Spartan Regular': require('./assets/fonts/LeagueSpartan-Regular.ttf'),
     'Itim' : require('./assets/fonts/Itim-Regular.ttf'), // only has 1 font weight
   });
 
@@ -89,9 +90,15 @@ export default function App() {
         <Camera style={styles.camera} ref={cameraRef}> 
           <StatusBar style="auto" />
         </Camera>
+        <TouchableOpacity style={styles.backButton}>
+          <Image source={require("./assets/backbutton.png")} />
+        </TouchableOpacity>
         {/* touchable opacity = button that fades when you press it */}
         <Text style={styles.titleText}>
           Scan
+        </Text>
+        <Text style={styles.titleSubtext}>
+          your QR code.
         </Text>
         <TouchableOpacity style={styles.takePicButton} onPress={takePic}>
           <Text style={styles.buttonText}>Take Pic</Text>
@@ -102,6 +109,7 @@ export default function App() {
   // camera style=... display live camera view
   // button title="take Pic"...: button that executes takePic function
   // statusbar: the bar at the top of the screen that displays time, battery, etc.
+  // apparently the views are read bottom-to-top (lowest items are displayed in the front)
 }
 
 const styles = StyleSheet.create({
@@ -115,10 +123,24 @@ const styles = StyleSheet.create({
   },
   titleText:{
     color: "#110C48",
-    fontSize: 40,
+    fontSize: 70,
     fontFamily: 'League Spartan SemiBold',
-    marginTop: "17%",
-    marginLeft: "12%"
+    marginTop: "5%",
+    marginLeft: "9%"
+  }, 
+  titleSubtext:{
+    position: "absolute",
+    color: "#110C48",
+    fontSize: 50,
+    fontFamily: 'League Spartan Regular',
+    top: "71%",
+    marginLeft: "10%"
+  },
+  backButton:{
+    position: "absolute",
+    top: "5%",
+    left: "5%",
+    // resized manually... :(
   },
   takePicButton:{
     position: "absolute",
@@ -126,6 +148,7 @@ const styles = StyleSheet.create({
     left: "47%",
     right: 30,
     bottom: 40,
+    borderRadius: 25,
     backgroundColor: "#9290B4" // light purple
   },
   buttonText:{
