@@ -6,6 +6,7 @@ import { View, Text, ImageBackground, StyleSheet, TextInput, TouchableOpacity, I
 import * as Location from 'expo-location';
 import {firebase} from '../../config'
 
+//locationType = true if it is location type, else it's the tasktype
 export default function AddTaskPage(){ 
   const [task, setTask] = useState(""); 
   const [locationType, setLocationType] = useState(true)
@@ -152,6 +153,7 @@ export default function AddTaskPage(){
 
   return(
     <View style={styles.container}> 
+    <StatusBar hidden={true} />
       <ImageBackground source={require('../../assets/images/topBannerImg.png')} style={styles.topBannerImg}>
         <View style={styles.topBanner}>
           <Text style={styles.heading}>Add Tasks</Text> 
@@ -168,26 +170,26 @@ export default function AddTaskPage(){
       />
 
       <Text style={styles.headingItem}>Task Type</Text> 
-      {/* <View style={styles.taskBtnContainer}>  */}
-      <TouchableOpacity 
-          style={this.taskBtnStyle()} onPress={updateTaskType}> 
-          <Text style={this.taskBtnTextStyle()}> 
-              {taskTypeText}
-          </Text> 
-      </TouchableOpacity> 
-      {/* </View> */}
+
+      <View style={styles.taskBtnContainer}>
+        <TouchableOpacity style={this.taskBtnStyle()} onPress={updateTaskType}>
+          <Text style={this.taskBtnTextStyle()}>{taskTypeText}</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={this.taskBtnStyle()} onPress={updateTaskType}>
+          <Text style={this.taskBtnTextStyle()}>{taskTypeText}</Text>
+        </TouchableOpacity>
+      </View>
 
       <Text style={styles.headingItem}>{taskTypePrompt}</Text> 
       <TextInput 
         style={styles.input} 
+        value={task} 
+        onChangeText={(text) => setTask(text)} 
         value={address} 
         onChangeText={setAddress}
         placeholder='Enter Location'
       />
-      <Button title="Check Location" onPress={geocode} />
-      <StatusBar style="auto" />
 
-      {/* <ImageBackground source={require('../../assets/images/topBannerImg.png')} style={styles.bottomBannerImg}> */}
       <View style = {styles.bottomSection}>
         <View style={styles.taskBtnContainer}> 
           <TouchableOpacity > 
@@ -195,18 +197,22 @@ export default function AddTaskPage(){
           </TouchableOpacity> 
           <TouchableOpacity 
             style={styles.createTaskBtn}>
-            <Text style={styles.addButtonText}> 
+            <Text style={styles.addButtonText} onPress={geocode}> 
                 Create New Task 
             </Text> 
           </TouchableOpacity> 
         </View>
       </View>
-      {/* </ImageBackground> */}
-    </View>    
+    </View>     
   );
 };
 
 const styles = StyleSheet.create({ 
+  taskBtnContainer: {
+    flexDirection: 'row',
+    marginHorizontal: 20,
+    marginTop: 5,
+  },
   container: { 
       flex: 1, 
       // padding: 40, 
@@ -225,6 +231,7 @@ const styles = StyleSheet.create({
   topBannerImg: {
     height: 155,
     weight: '100%',
+    marginTop: 0
     // aspectRatio: 1,
   },
   // bottomBannerImg: {
@@ -275,7 +282,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     flexDirection: "row", 
     justifyContent: "space-between", 
-    alignItems: "top", 
+    alignItems: "center", 
     marginLeft: 20,
     marginRight: 20,
   }, 
