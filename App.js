@@ -1,6 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, SafeAreaView, Button, Image, TouchableOpacity } from 'react-native'; // for perms
-//import AppLoading from 'expo-app-loading';
 import { useFonts } from 'expo-font';
 import { useEffect, useRef, useState } from 'react';
 import { Camera } from 'expo-camera';
@@ -19,8 +18,8 @@ export default function App() {
 
   // import fonts
   let [fontsLoaded] = useFonts({
+    'League Spartan SemiBold': require('./assets/fonts/LeagueSpartan-SemiBold.ttf'), // adjustable font weight
     'Itim' : require('./assets/fonts/Itim-Regular.ttf'), // only has 1 font weight
-    'League Spartan': require('./assets/fonts/LeagueSpartan-VariableFont_wght.ttf') // adjustable font weight
   });
 
   useEffect(() => { // ask for perms, run only once
@@ -91,7 +90,9 @@ export default function App() {
           <StatusBar style="auto" />
         </Camera>
         {/* touchable opacity = button that fades when you press it */}
-        
+        <Text style={styles.titleText}>
+          Scan
+        </Text>
         <TouchableOpacity style={styles.takePicButton} onPress={takePic}>
           <Text style={styles.buttonText}>Take Pic</Text>
         </TouchableOpacity>
@@ -111,6 +112,13 @@ const styles = StyleSheet.create({
   },
   camera: {
     height: "60%", // takes up 60% of y axis on page (starting from top)
+  },
+  titleText:{
+    color: "#110C48",
+    fontSize: 40,
+    fontFamily: 'League Spartan SemiBold',
+    marginTop: "17%",
+    marginLeft: "12%"
   },
   takePicButton:{
     position: "absolute",
