@@ -88,6 +88,7 @@ export default function TasksPage({navigation}) {
     if(users[index].taskLocType){
       navigation.navigate("LocationTaskPage");
     } else{
+      navigation.navigate("Kamera");
       return; 
       //TODO: navigate to camera page
     }
