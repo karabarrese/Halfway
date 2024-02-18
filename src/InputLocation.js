@@ -5,6 +5,7 @@ import { Button, TextInput, View, Alert, StyleSheet, Text, FlatList, Pressable} 
 import * as Location from 'expo-location';
 import {firebase} from '../config'
 
+
 const InputLocation = () => {
   const [location, setLocation] = useState(null);
   const [address, setAddress] = useState('');
